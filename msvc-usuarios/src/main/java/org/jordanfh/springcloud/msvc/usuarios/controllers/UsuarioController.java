@@ -3,6 +3,7 @@ package org.jordanfh.springcloud.msvc.usuarios.controllers;
 import org.jordanfh.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.jordanfh.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -32,7 +33,7 @@ public class UsuarioController {
 
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody Usuario usuario){
-        
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
     }
 
 }
