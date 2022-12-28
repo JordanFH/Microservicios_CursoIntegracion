@@ -37,7 +37,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(Usuario usuario, long id) {
+    public ResponseEntity<?> editar(@RequestBody Usuario usuario, @PathVariable long id) {
         Optional<Usuario> optional = service.buscarId(id);
         if (optional.isPresent()) {
             Usuario usuarioDB = optional.get();
@@ -50,7 +50,7 @@ public class UsuarioController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> eliminar(long id) {
+    public ResponseEntity<?> eliminar(@PathVariable long id) {
         Optional<Usuario> optional = service.buscarId(id);
         if (optional.isPresent()) {
             service.eliminar(id);
