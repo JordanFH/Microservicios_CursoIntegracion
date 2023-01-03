@@ -8,9 +8,9 @@ import java.util.Optional;
 public interface UsuarioService {
     List<Usuario> listar();
 
-    Optional<Usuario> buscarId(long id);
+    Optional<Usuario> buscarId(Long id);
 
     Usuario guardar(Usuario usuario);
 
-    void eliminar(long id);
+    void eliminar(Long id);
 }
