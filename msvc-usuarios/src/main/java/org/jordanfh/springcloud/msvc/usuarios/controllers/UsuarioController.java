@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
+@RequestMapping("/api/usuario")
 public class UsuarioController {
 
     @Autowired
@@ -44,7 +45,7 @@ public class UsuarioController {
             usuarioDB.setNombre(usuario.getNombre());
             usuarioDB.setEmail(usuario.getEmail());
             usuarioDB.setPassword(usuario.getPassword());
-            return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
+            return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuarioDB));
         }
         return ResponseEntity.notFound().build();
     }
