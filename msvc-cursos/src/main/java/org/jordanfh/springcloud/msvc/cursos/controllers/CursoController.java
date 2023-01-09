@@ -18,9 +18,12 @@ public class CursoController {
     private CursoService service;
 
     @GetMapping
-    public List<Curso> listar() {
-        return service.listar();
+    public ResponseEntity<List<Curso>> listar(){
+        return ResponseEntity.ok(service.listar());
     }
+    /*public List<Curso> listar() {
+        return service.listar();
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id) {

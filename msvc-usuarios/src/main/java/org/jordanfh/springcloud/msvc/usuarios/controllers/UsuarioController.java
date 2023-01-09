@@ -18,9 +18,12 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    public List<Usuario> listar() {
-        return service.listar();
+    public ResponseEntity<List<Usuario>> listar(){
+        return ResponseEntity.ok(service.listar());
     }
+    /*public List<Usuario> listar() {
+        return service.listar();
+    }*/
 
     @GetMapping("/{id}")
     public ResponseEntity<?> detalle(@PathVariable Long id) {
