@@ -18,7 +18,7 @@ public class CursoController {
     private CursoService service;
 
     @GetMapping
-    public ResponseEntity<List<Curso>> listar(){
+    public ResponseEntity<List<Curso>> listar() {
         return ResponseEntity.ok(service.listar());
     }
     /*public List<Curso> listar() {
@@ -37,7 +37,8 @@ public class CursoController {
 
     @PostMapping
     public ResponseEntity<?> crear(@RequestBody Curso curso) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(curso));
+        Curso dbCurso = service.guardar(curso);
+        return ResponseEntity.status(HttpStatus.CREATED).body(dbCurso);
     }
 
     @PutMapping("/{id}")
@@ -55,7 +56,7 @@ public class CursoController {
     public ResponseEntity<?> eliminar(@PathVariable Long id) {
         Optional<Curso> optional = service.buscarId(id);
         if (optional.isPresent()) {
-            service.eliminar(id);
+            service.eliminar(optional.get().getId());
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
