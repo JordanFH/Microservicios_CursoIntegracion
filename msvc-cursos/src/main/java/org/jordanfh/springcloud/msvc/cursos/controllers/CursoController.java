@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("/api/curso")
+@RequestMapping(value = {"/api/curso", "/api/curso/"})
 public class CursoController {
 
     @Autowired
@@ -39,7 +39,7 @@ public class CursoController {
     @PostMapping
     public ResponseEntity<?> crear(@Valid @RequestBody Curso curso, BindingResult result) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return validarResultado(result);
         }
         return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(curso));
@@ -48,7 +48,7 @@ public class CursoController {
     @PutMapping("/{id}")
     public ResponseEntity<?> editar(@Valid @RequestBody Curso curso, @PathVariable Long id, BindingResult result) {
 
-        if (result.hasErrors()){
+        if (result.hasErrors()) {
             return validarResultado(result);
         }
 
