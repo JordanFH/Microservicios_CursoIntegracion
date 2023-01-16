@@ -1,13 +1,17 @@
 package org.jordanfh.springcloud.msvc.usuarios.controllers;
 
+import jakarta.validation.Valid;
 import org.jordanfh.springcloud.msvc.usuarios.models.entity.Usuario;
 import org.jordanfh.springcloud.msvc.usuarios.services.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,7 +22,7 @@ public class UsuarioController {
     private UsuarioService service;
 
     @GetMapping
-    public ResponseEntity<List<Usuario>> listar(){
+    public ResponseEntity<List<Usuario>> listar() {
         return ResponseEntity.ok(service.listar());
     }
     /*public List<Usuario> listar() {
@@ -36,12 +40,21 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<?> crear(@RequestBody Usuario usuario) {
+    public ResponseEntity<?> crear(@Valid @RequestBody Usuario usuario, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return validarResultado(result);
+        }
         return ResponseEntity.status(HttpStatus.CREATED).body(service.guardar(usuario));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editar(@RequestBody Usuario usuario, @PathVariable Long id) {
+    public ResponseEntity<?> editar(@Valid @RequestBody Usuario usuario, @PathVariable Long id, BindingResult result) {
+
+        if (result.hasErrors()) {
+            return validarResultado(result);
+        }
+
         Optional<Usuario> optional = service.buscarId(id);
         if (optional.isPresent()) {
             Usuario usuarioDB = optional.get();
@@ -61,6 +74,14 @@ public class UsuarioController {
             return ResponseEntity.noContent().build();
         }
         return ResponseEntity.notFound().build();
+    }
+
+    private static ResponseEntity<Map<String, String>> validarResultado(BindingResult result) {
+        Map<String, String> errores = new HashMap<>();
+        result.getFieldErrors().forEach(error -> {
+            errores.put(error.getField(), "El campo <" + error.getField() + "> " + error.getDefaultMessage());
+        });
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errores);
     }
 
 }
