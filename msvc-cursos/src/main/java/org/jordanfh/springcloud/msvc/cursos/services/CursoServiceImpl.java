@@ -38,4 +38,9 @@ public class CursoServiceImpl implements CursoService {
     public void eliminar(Long id) {
         repository.deleteById(id);
     }
+
+    @Override
+    public Optional<Curso> buscarNombre(String nombre) {
+        return repository.findByNombre(nombre);
+    }
 }

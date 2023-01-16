@@ -13,4 +13,6 @@ public interface CursoService {
     Curso guardar(Curso curso);
 
     void eliminar(Long id);
+
+    Optional<Curso> buscarNombre(String nombre);
 }
