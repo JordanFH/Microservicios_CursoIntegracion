@@ -1,6 +1,7 @@
 package org.jordanfh.springcloud.msvc.cursos.services;
 
-import org.jordanfh.springcloud.msvc.cursos.entity.Curso;
+import org.jordanfh.springcloud.msvc.cursos.models.UsuarioModel;
+import org.jordanfh.springcloud.msvc.cursos.models.entity.Curso;
 import org.jordanfh.springcloud.msvc.cursos.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,21 @@ public class CursoServiceImpl implements CursoService {
     @Override
     public Optional<Curso> buscarNombre(String nombre) {
         return repository.findByNombre(nombre);
+    }
+
+    // Implementación de los métodos remotos
+    @Override
+    public Optional<UsuarioModel> asignarUsuario(UsuarioModel usuario, Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UsuarioModel> crearUsuario(UsuarioModel usuario, Long id) {
+        return Optional.empty();
+    }
+
+    @Override
+    public Optional<UsuarioModel> eliminarUsuario(UsuarioModel usuario, Long id) {
+        return Optional.empty();
     }
 }
