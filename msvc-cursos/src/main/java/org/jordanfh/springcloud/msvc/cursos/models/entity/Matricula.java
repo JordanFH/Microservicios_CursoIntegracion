@@ -10,10 +10,8 @@ public class Matricula {
     @Id()
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     @Column(unique = true)
     private Long idUsuario;
-    @NotNull
     @Column(unique = true)
     private Long idCurso;
     @DecimalMin(value = "0.0")

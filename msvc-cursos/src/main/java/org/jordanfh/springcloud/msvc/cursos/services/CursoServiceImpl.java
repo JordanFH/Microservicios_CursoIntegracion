@@ -1,7 +1,9 @@
 package org.jordanfh.springcloud.msvc.cursos.services;
 
+import org.jordanfh.springcloud.msvc.cursos.clients.UsuarioClientRest;
 import org.jordanfh.springcloud.msvc.cursos.models.UsuarioModel;
 import org.jordanfh.springcloud.msvc.cursos.models.entity.Curso;
+import org.jordanfh.springcloud.msvc.cursos.models.entity.Matricula;
 import org.jordanfh.springcloud.msvc.cursos.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +17,8 @@ public class CursoServiceImpl implements CursoService {
 
     @Autowired
     private CursoRepository repository;
+    @Autowired
+    private UsuarioClientRest client;
 
     @Override
     @Transactional(readOnly = true)
@@ -47,17 +51,50 @@ public class CursoServiceImpl implements CursoService {
 
     // Implementación de los métodos remotos
     @Override
-    public Optional<UsuarioModel> asignarUsuario(UsuarioModel usuario, Long id) {
+    @Transactional
+    public Optional<UsuarioModel> asignarUsuario(UsuarioModel usuario, Long cursoId) {
+        Optional<Curso> optional = repository.findById(cursoId);
+        if (optional.isPresent()) {
+            UsuarioModel usuarioMsvc = client.detalle(usuario.getId());
+            Curso curso = optional.get();
+            Matricula matricula = new Matricula();
+            matricula.setIdUsuario(usuarioMsvc.getId());
+            curso.addMatricula(matricula);
+            repository.save(curso);
+            return Optional.of(usuarioMsvc);
+        }
         return Optional.empty();
     }
 
     @Override
-    public Optional<UsuarioModel> crearUsuario(UsuarioModel usuario, Long id) {
+    @Transactional
+    public Optional<UsuarioModel> crearUsuario(UsuarioModel usuario, Long cursoId) {
+        Optional<Curso> optional = repository.findById(cursoId);
+        if (optional.isPresent()) {
+            UsuarioModel usuarioNewMsvc = client.crear(usuario);
+            Curso curso = optional.get();
+            Matricula matricula = new Matricula();
+            matricula.setIdUsuario(usuarioNewMsvc.getId());
+            curso.addMatricula(matricula);
+            repository.save(curso);
+            return Optional.of(usuarioNewMsvc);
+        }
         return Optional.empty();
     }
 
     @Override
-    public Optional<UsuarioModel> eliminarUsuario(UsuarioModel usuario, Long id) {
+    @Transactional
+    public Optional<UsuarioModel> eliminarUsuario(UsuarioModel usuario, Long cursoId) {
+        Optional<Curso> optional = repository.findById(cursoId);
+        if (optional.isPresent()) {
+            UsuarioModel usuarioMsvc = client.detalle(usuario.getId());
+            Curso curso = optional.get();
+            Matricula matricula = new Matricula();
+            matricula.setIdUsuario(usuarioMsvc.getId());
+            curso.removeMatricula(matricula);
+            repository.save(curso);
+            return Optional.of(usuarioMsvc);
+        }
         return Optional.empty();
     }
 }
