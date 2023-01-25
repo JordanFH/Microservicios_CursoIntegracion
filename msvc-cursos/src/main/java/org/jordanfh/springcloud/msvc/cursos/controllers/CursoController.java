@@ -136,9 +136,9 @@ public class CursoController {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/matriculados-por-curso/{cursoId}")
-    public ResponseEntity<?> detalleMatriculados(@PathVariable Long cursoId) {
-        Optional<Curso> optional = service.matriculadosPorCurso(cursoId);
+    @GetMapping("/matriculados-por-curso/{id}")
+    public ResponseEntity<?> detalleMatriculados(@PathVariable Long id) {
+        Optional<Curso> optional = service.matriculadosPorCurso(id);
 
         if (optional.isPresent()) {
             return ResponseEntity.ok(optional.get());

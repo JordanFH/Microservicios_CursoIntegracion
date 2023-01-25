@@ -28,12 +28,6 @@ public class Curso {
         usuarios = new ArrayList<>();
     }
 
-    public Curso(String nombre) {
-        this.nombre = nombre;
-        matriculas = new ArrayList<>();
-        usuarios = new ArrayList<>();
-    }
-
     // Métodos de la lista matrículas
 
     public void addMatricula(Matricula matricula) {

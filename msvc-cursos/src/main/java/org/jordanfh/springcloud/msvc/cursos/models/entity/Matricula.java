@@ -12,10 +12,10 @@ public class Matricula {
     private Long id;
     @Column(unique = true)
     private Long idUsuario;
-    private Long idCurso;
-    @DecimalMin(value = "0.0")
+
+    /*@DecimalMin(value = "0.0")
     @DecimalMax(value = "20.0")
-    private Float nota;
+    private Float nota;*/
 
     public Long getId() {
         return id;
@@ -33,27 +33,13 @@ public class Matricula {
         this.idUsuario = idUsuario;
     }
 
-    public Long getIdCurso() {
-        return idCurso;
-    }
-
-    public void setIdCurso(Long idCurso) {
-        this.idCurso = idCurso;
-    }
-
-    public Float getNota() {
-        return nota;
-    }
-
-    public void setNota(Float nota) {
-        this.nota = nota;
-    }
-
     @Override
     public boolean equals(Object obj) {
+
         if (this == obj) {
             return true;
         }
+
         if (!(obj instanceof Matricula oMatricula)) {
             return false;
         }
