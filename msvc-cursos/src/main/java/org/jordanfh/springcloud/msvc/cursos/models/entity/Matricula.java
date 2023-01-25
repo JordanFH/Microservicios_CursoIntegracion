@@ -12,7 +12,6 @@ public class Matricula {
     private Long id;
     @Column(unique = true)
     private Long idUsuario;
-    @Column(unique = true)
     private Long idCurso;
     @DecimalMin(value = "0.0")
     @DecimalMax(value = "20.0")
