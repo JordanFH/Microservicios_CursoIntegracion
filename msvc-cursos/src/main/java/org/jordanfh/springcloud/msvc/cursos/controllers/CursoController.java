@@ -136,4 +136,15 @@ public class CursoController {
         return ResponseEntity.notFound().build();
     }
 
+    @GetMapping("/matriculados-por-curso/{cursoId}")
+    public ResponseEntity<?> detalleMatriculados(@PathVariable Long cursoId) {
+        Optional<Curso> optional = service.matriculadosPorCurso(cursoId);
+
+        if (optional.isPresent()) {
+            return ResponseEntity.ok(optional.get());
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
 }

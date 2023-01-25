@@ -6,6 +6,8 @@ import org.jordanfh.springcloud.msvc.cursos.models.entity.Curso;
 import org.jordanfh.springcloud.msvc.cursos.models.entity.Matricula;
 import org.jordanfh.springcloud.msvc.cursos.repositories.CursoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,6 +47,7 @@ public class CursoServiceImpl implements CursoService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<Curso> buscarNombre(String nombre) {
         return repository.findByNombre(nombre);
     }
@@ -94,6 +97,27 @@ public class CursoServiceImpl implements CursoService {
             curso.removeMatricula(matricula);
             repository.save(curso);
             return Optional.of(usuarioMsvc);
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Optional<Curso> matriculadosPorCurso(Long id) {
+        Optional<Curso> optional = repository.findById(id);
+
+        if (optional.isPresent()) {
+            Curso dbCurso = optional.get();
+
+            if (!dbCurso.getMatriculas().isEmpty()) {
+                List<Long> ids = dbCurso.getMatriculas().stream().map(Matricula::getIdUsuario).toList();
+
+                List<UsuarioModel> usuarios = client.listaUsuariosPorId(ids);
+
+                dbCurso.setUsuarios(usuarios);
+            } else {
+                return Optional.of(dbCurso);
+            }
         }
         return Optional.empty();
     }

@@ -90,8 +90,8 @@ public class UsuarioController {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errores);
     }
 
-    @GetMapping("/matriculados")
-    public ResponseEntity<?> listaMatriculados(@RequestParam List<Long> ids) {
+    @GetMapping("/usuarios-por-id")
+    public ResponseEntity<?> listaUsuariosPorId(@RequestParam List<Long> ids) {
         return ResponseEntity.ok(service.listaUsuariosPorId(ids));
     }
 

@@ -20,6 +20,10 @@ public interface CursoService {
     // Métodos remotos relacionados con el HttpClient (para la comunicación de microservicios por medio de ApiREST)
 
     Optional<UsuarioModel> asignarUsuario(UsuarioModel usuario, Long id);
+
     Optional<UsuarioModel> crearUsuario(UsuarioModel usuario, Long id);
+
     Optional<UsuarioModel> eliminarUsuario(UsuarioModel usuario, Long id);
+
+    Optional<Curso> matriculadosPorCurso(Long id);
 }
