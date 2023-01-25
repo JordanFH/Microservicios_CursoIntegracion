@@ -39,6 +39,14 @@ public class UsuarioServiceImpl implements UsuarioService {
     }
 
     @Override
+    @Transactional(readOnly = true)
+    public List<Usuario> listaUsuarios(Iterable<Long> ids) {
+        return (List<Usuario>) repository.findAllById(ids);
+    }
+
+    // No existe en el CRUD Repository
+    @Override
+    @Transactional(readOnly = true)
     public Optional<Usuario> buscarEmail(String email) {
         return repository.findByEmail(email);
     }

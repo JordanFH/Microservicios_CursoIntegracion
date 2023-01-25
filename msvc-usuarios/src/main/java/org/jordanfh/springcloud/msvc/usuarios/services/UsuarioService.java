@@ -14,5 +14,8 @@ public interface UsuarioService {
 
     void eliminar(Long id);
 
+    List<Usuario> listaUsuariosPorId(Iterable<Long> ids);
+
+    // No existe en el CRUD Repository
     Optional<Usuario> buscarEmail(String email);
 }
